@@ -1,8 +1,6 @@
-# polybius_square_cipher.py
-
 def polybius_square_cipher(text: str) -> str:
     """Квадрат Полибия."""
-    # letters with keys (ij)  
+    # буквы с ключами (ij)  
     polybius_table = {
         'а': '11', 'б': '12', 'в': '13', 'г': '14', 'д': '15', 'е': '16',
         'ж': '21', 'з': '22', 'и': '23', 'й': '24', 'к': '25', 'л': '26',
@@ -16,7 +14,8 @@ def polybius_square_cipher(text: str) -> str:
     return encrypted_text
 
 def polybius_square_decipher(text: str) -> str:
-    """Расшифровка квадрат Полибия."""
+    """Расшифровка квадрата Полибия."""
+    # буквы с ключами (ij)  
     polybius_table = {
         '11': 'а', '12': 'б', '13': 'в', '14': 'г', '15': 'д', '16': 'е',
         '21': 'ж', '22': 'з', '23': 'и', '24': 'й', '25': 'к', '26': 'л',
@@ -26,6 +25,7 @@ def polybius_square_decipher(text: str) -> str:
         '61': 'ю', '62': 'я'
     }
 
+    # Разделение текста на пары символов
     pairs = [text[i:i+2] for i in range(0, len(text), 2)]
 
     decrypted_text = ''.join(polybius_table.get(pair, pair) for pair in pairs)
