@@ -24,23 +24,29 @@ def matrix_cipher(text_numeric, key_matrix):
 
 def matrix_decipher(encrypted_message, key_matrix):
     """Дешифрование матричного шифра."""
-    decrypted_messages = []
-    key_size = key_matrix.shape[0]
+    decrypted_messages = []  
+    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'  
+    key_size = key_matrix.shape[0]  
+    split_message = [encrypted_message[i:i+2] for i in range(0, len(encrypted_message), 2)]  # Разбиваем зашифрованное сообщение на блоки по 2 символа
+    
+    vectors = [] 
+    for i in range(0, len(split_message), key_size):  # Разбиваем зашифрованное сообщение на векторы размером с ключ
+        vectors.append(split_message[i:i+key_size])
+        
+    encrypted_vectors = np.array(vectors, dtype=int)  
 
-    # Получение числового представления зашифрованного сообщения
-    encrypted_vectors = [np.array(list(map(int, encrypted_message[i:i+key_size]))) for i in range(0, len(encrypted_message), key_size)]
+    inverse_key_matrix = np.linalg.inv(key_matrix)  # Вычисляем обратную матрицу для заданной ключевой матрицы
 
-    # Вычисление обратной матрицы ключа
-    inverse_key_matrix = np.linalg.inv(key_matrix)
+    for vector in encrypted_vectors:  # Проходим по каждому зашифрованному вектору
+        decrypted_vector = np.dot(inverse_key_matrix, vector)  # Выполняем умножение обратной ключевой матрицы на зашифрованный вектор
+        decrypted_str = ''.join([str(int(round(x))) for x in decrypted_vector])  # Преобразуем расшифрованный вектор в строку
+        decrypted_messages.append(decrypted_str)  # Добавляем расшифрованное сообщение в список расшифрованных сообщений
 
-    # Дешифрование каждого вектора текста
-    for vector in encrypted_vectors:
-        # Умножение обратной ключевой матрицы на вектор зашифрованного текста
-        decrypted_vector = np.dot(inverse_key_matrix, vector)
-        # Преобразование дешифрованного вектора в строку чисел без пробелов и знаков
-        decrypted_str = ''.join([str(int(x)) for x in decrypted_vector])
-        # Добавление дешифрованного сообщения в список дешифрованных сообщений
-        decrypted_messages.append(decrypted_str)
+    decrypted_text = ''  # Создаем пустую строку для хранения окончательного расшифрованного текста
+    for message in decrypted_messages:  # Проходим по каждому расшифрованному сообщению
+        for num in message:  # Проходим по каждой цифре в расшифрованном сообщении
+            if num != '':  # Проверяем, что цифра не пустая
+                letter_index = int(num) - 1  # Вычисляем индекс буквы в алфавите
+                decrypted_text += alphabet[letter_index]  # Добавляем расшифрованную букву в окончательный расшифрованный текст
 
-    # Объединение всех дешифрованных сообщений в одну строку
-    return ''.join(decrypted_messages)
+    return ''.join(decrypted_text)  

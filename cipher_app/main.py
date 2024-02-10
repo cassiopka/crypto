@@ -3,14 +3,13 @@ from ciphers.caesar_cipher import caesar_cipher, caesar_decipher
 from ciphers.polybius_square_cipher import polybius_square_cipher, polybius_square_decipher
 from ciphers.trithemius_cipher import trithemius_cipher, trithemius_decipher
 from ciphers.belazo_cipher import belazo_cipher, belazo_decipher
-from ciphers.matrix_cipher import matrix_cipher, matrix_decipher
+from ciphers.matrix_cipher import *
 
 from utils.input_formatter import format_input
 from utils.block_formatter import format_blocks
 from utils.print_square import print_polybius_square
 from utils.text_to_numeric import text_to_numeric
 
-import numpy as np
 
 def input_key_matrix(size):
     """Функция для ввода ключевой матрицы."""
