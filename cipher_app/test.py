@@ -21,7 +21,6 @@ class VerticalPermutation:
             positions[min_index] = -(j + 1)
 
         result = ''.join(str(-p) for p in positions if p < 0)
-        print(positions)
         return result
 
     def get_encrypted(self, text):
@@ -73,3 +72,5 @@ if __name__ == "__main__":
     result = cipher.get_encrypted("Весна")
     print(result)
     print(cipher.get_decrypted(result))
+
+
