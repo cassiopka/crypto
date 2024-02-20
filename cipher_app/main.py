@@ -10,7 +10,6 @@ from utils.block_formatter import format_blocks
 from utils.print_square import print_polybius_square
 from utils.text_to_numeric import text_to_numeric
 
-
 def input_key_matrix(size):
     """Функция для ввода ключевой матрицы."""
     key_matrix = []
@@ -101,7 +100,8 @@ def main():
             if action_choice == '1':
                 result = matrix_cipher(text_numeric, key_matrix)
             else:
-                result = matrix_decipher(formatted_text, key_matrix)
+                result = matrix_decipher(text, key_matrix)
+            print(result)
 
         formatted_result = format_blocks(result)
 
@@ -110,3 +110,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,4 +1,3 @@
-
 def belazo_cipher(text: str, key: str) -> str:
     """Шифр Белазо."""
     # Создаем таблицу алфавита, каждая строка - сдвиг на 1 букву
@@ -21,8 +20,6 @@ def belazo_cipher(text: str, key: str) -> str:
             encrypted_text += char
 
     return encrypted_text
-
-
 
 def belazo_decipher(text: str, key: str) -> str:
     """Дешифрование шифра Белазо."""
