@@ -4,6 +4,7 @@ from ciphers.polybius_square_cipher import polybius_square_cipher, polybius_squa
 from ciphers.trithemius_cipher import trithemius_cipher, trithemius_decipher
 from ciphers.belazo_cipher import belazo_cipher, belazo_decipher
 from ciphers.matrix_cipher import *
+from ciphers.shenon import *
 
 from utils.input_formatter import format_input
 from utils.block_formatter import format_blocks
@@ -51,17 +52,20 @@ def main():
         print("4. Тритемия")
         print("5. Белазо")
         print("6. Матричный шифр")
+        print("7. Блокнот Шеннона")
 
         cipher_choice = input("Введите номер шифра: ")
 
-        if cipher_choice not in ['1', '2', '3', '4', '5', '6']:
+        if cipher_choice not in ['1', '2', '3', '4', '5', '6', '7']:
             print("Неверный выбор шифра!")
             continue
 
         if cipher_choice == '3':
             print_polybius_square()
-
+        
         text = input(f"Введите текст для {cipher_mode}: ")
+        if action_choice != '2':
+            decipher_text = text
 
         formatted_text = format_input(text)
 
@@ -100,13 +104,26 @@ def main():
             if action_choice == '1':
                 result = matrix_cipher(text_numeric, key_matrix)
             else:
-                result = matrix_decipher(text, key_matrix)
+                result = decipher_text
+        elif cipher_choice == '7':
+            a = int(input("Введите число а (mod 4 = 1): "))
+            c = int(input("Введите с (нечетное число): "))
+            t0 = int(input("Введите T(0): "))
+            if action_choice == '1':
+                text_numeric = text_to_numeric(formatted_text)
+                sequence = linear_congruential_generator(a, c, t0)
+                processed_list = process_list(text_numeric, sequence)
+                result = numeric_to_text(processed_list)
+            else:
+                result = decipher_text
+        if action_choice != '2':
+            formatted_result = format_blocks(result)
+            print("Результат:")
+            print(formatted_result)
+        else:
+            print("Результат:")
             print(result)
 
-        formatted_result = format_blocks(result)
-
-        print("Результат:")
-        print(formatted_result)
 
 if __name__ == "__main__":
     main()

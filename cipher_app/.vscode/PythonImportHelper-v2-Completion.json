@@ -105,14 +105,6 @@
         "documentation": {}
     },
     {
-        "label": "format_input",
-        "importPath": "utils.input_formatter",
-        "description": "utils.input_formatter",
-        "isExtraImport": true,
-        "detail": "utils.input_formatter",
-        "documentation": {}
-    },
-    {
         "label": "format_blocks",
         "importPath": "utils.block_formatter",
         "description": "utils.block_formatter",
@@ -126,14 +118,6 @@
         "description": "utils.print_square",
         "isExtraImport": true,
         "detail": "utils.print_square",
-        "documentation": {}
-    },
-    {
-        "label": "text_to_numeric",
-        "importPath": "utils.text_to_numeric",
-        "description": "utils.text_to_numeric",
-        "isExtraImport": true,
-        "detail": "utils.text_to_numeric",
         "documentation": {}
     },
     {
@@ -203,7 +187,7 @@
         "kind": 2,
         "importPath": "ciphers.matrix_cipher",
         "description": "ciphers.matrix_cipher",
-        "peekOfCode": "def matrix_cipher(text_numeric, key_matrix):\n    \"\"\"Матричный шифр.\"\"\"\n    encrypted_messages = []\n    print(\"<SDM> [matrix_cipher scope] encrypted_messages: \", encrypted_messages)\n    key_size = key_matrix.shape[0]\n    print(\"<SDM> [matrix_cipher scope] key_size: \", key_size)\n    # Подготовка текста к шифрованию: разбиение на векторы длиной key_size\n    text_chunks = [text_numeric[i:i+key_size] for i in range(0, len(text_numeric), key_size)]\n    print(\"<SDM> [matrix_cipher scope] text_chunks: \", text_chunks)\n    # Шифрование каждого вектора текста",
+        "peekOfCode": "def matrix_cipher(text_numeric, key_matrix):\n    \"\"\"Матричный шифр.\"\"\"\n    encrypted_messages = []\n    key_size = key_matrix.shape[0]\n    # Подготовка текста к шифрованию: разбиение на векторы длиной key_size\n    text_chunks = [text_numeric[i:i+key_size] for i in range(0, len(text_numeric), key_size)]\n    # Шифрование каждого вектора текста\n    for chunk in text_chunks:\n        # Дополнение вектора нулями до длины key_size, если необходимо\n        while len(chunk) < key_size:",
         "detail": "ciphers.matrix_cipher",
         "documentation": {}
     },
@@ -212,7 +196,7 @@
         "kind": 2,
         "importPath": "ciphers.matrix_cipher",
         "description": "ciphers.matrix_cipher",
-        "peekOfCode": "def matrix_decipher(encrypted_message, key_matrix):\n    \"\"\"Дешифрование матричного шифра.\"\"\"\n    decrypted_messages = []  \n    print(\"<SDM> [matrix_decipher scope] decrypted_messages: \", decrypted_messages)\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'  \n    key_size = key_matrix.shape[0]  \n    print(\"<SDM> [matrix_decipher scope] key_size: \", key_size)\n    split_message = [encrypted_message[i:i+2] for i in range(0, len(encrypted_message), 2)]  # Разбиваем зашифрованное сообщение на блоки по 2 символа\n    print(\"<SDM> [matrix_decipher scope] split_message: \", split_message)\n    vectors = [] ",
+        "peekOfCode": "def matrix_decipher(encrypted_message, key_matrix):\n    \"\"\"Дешифрование матричного шифра.\"\"\"\n    decrypted_messages = []  \n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'  \n    key_size = key_matrix.shape[0]  \n    split_message = encrypted_message.split()  # Разбиваем зашифрованное сообщение на блоки по пробелам\n    vectors = [] \n    for vector_block in split_message:\n        vector_block = vector_block.replace(' ', '')  # Удаляем пробелы из блока\n        vectors.append(vector_block)",
         "detail": "ciphers.matrix_cipher",
         "documentation": {}
     },
@@ -250,6 +234,15 @@
         "description": "ciphers.trithemius_cipher",
         "peekOfCode": "def trithemius_decipher(text: str) -> str:\n    \"\"\"Функция для расшифровки текста, зашифрованного методом Тритемия.\"\"\"\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'  \n    n = len(alphabet)\n    decrypted_text = ''\n    for j, char in enumerate(text, start=1):  # перебираем символы текста, начиная с индекса 1\n        i = alphabet.index(char) - j + 1  # находим новый индекс символа\n        decrypted_text += alphabet[i % n]  # добавляем расшифрованный символ к расшифрованному тексту\n    return decrypted_text",
         "detail": "ciphers.trithemius_cipher",
+        "documentation": {}
+    },
+    {
+        "label": "VerticalPermutation",
+        "kind": 6,
+        "importPath": "ciphers.vertical",
+        "description": "ciphers.vertical",
+        "peekOfCode": "class VerticalPermutation:\n    key_string = \"аб\"\n    example_alphabet = ('а', 'б', 'в', 'г', 'д', 'е', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я')\n    def __init__(self, key):\n        self.key = key\n    @staticmethod\n    def key_to_int(key_string):\n        positions = [-1] * len(key_string)\n        for i, char in enumerate(key_string):\n            if char in VerticalPermutation.example_alphabet:",
+        "detail": "ciphers.vertical",
         "documentation": {}
     },
     {
@@ -307,65 +300,92 @@
         "documentation": {}
     },
     {
-        "label": "keyword",
-        "kind": 5,
+        "label": "linear_congruential_generator",
+        "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "keyword = input(\"Введите ключ-слово: \")\ntext = input(\"Введите текст для шифрования: \")\nkeyword = format_input(keyword)\nnumeric_text = text_to_numeric(keyword)\nnumeric_text.sort()\nnumeric_len = len(numeric_text)\ncols = numeric_len\nmatrix = []\nwhile True:\n    row_input = input(\"Введите числа через пробел (или нажмите Enter для завершения): \")",
+        "peekOfCode": "def linear_congruential_generator(a, c, t0, modulo=32):\n    if a % 4 != 1:\n        raise ValueError(\"a must be equal to 1 modulo 4\")\n    if c % 2 == 0:\n        raise ValueError(\"c must be an odd number\")\n    sequence = []\n    i = 0\n    t_current = t0\n    while i < 100:\n        i += 1",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "text",
-        "kind": 5,
+        "label": "process_list",
+        "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "text = input(\"Введите текст для шифрования: \")\nkeyword = format_input(keyword)\nnumeric_text = text_to_numeric(keyword)\nnumeric_text.sort()\nnumeric_len = len(numeric_text)\ncols = numeric_len\nmatrix = []\nwhile True:\n    row_input = input(\"Введите числа через пробел (или нажмите Enter для завершения): \")\n    if not row_input:",
+        "peekOfCode": "def process_list(list1, sequence):\n    result = []\n    for i in range(len(sequence)):\n        result.append((list1[i] + sequence[i]) % 32)\n    return result\ndef numeric_to_text(numeric_values):\n    \"\"\"Функция для преобразования числового эквивалента в текст.\"\"\"\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'\n    text = ''\n    for value in numeric_values:",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "keyword",
-        "kind": 5,
+        "label": "numeric_to_text",
+        "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "keyword = format_input(keyword)\nnumeric_text = text_to_numeric(keyword)\nnumeric_text.sort()\nnumeric_len = len(numeric_text)\ncols = numeric_len\nmatrix = []\nwhile True:\n    row_input = input(\"Введите числа через пробел (или нажмите Enter для завершения): \")\n    if not row_input:\n        break",
+        "peekOfCode": "def numeric_to_text(numeric_values):\n    \"\"\"Функция для преобразования числового эквивалента в текст.\"\"\"\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'\n    text = ''\n    for value in numeric_values:\n        if 1 <= value <= len(alphabet):\n            text += alphabet[value - 1]\n    return text\n# User input\na = int(input(\"Enter a (must be equal to 1 modulo 4): \"))",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "numeric_text",
+        "label": "a",
         "kind": 5,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "numeric_text = text_to_numeric(keyword)\nnumeric_text.sort()\nnumeric_len = len(numeric_text)\ncols = numeric_len\nmatrix = []\nwhile True:\n    row_input = input(\"Введите числа через пробел (или нажмите Enter для завершения): \")\n    if not row_input:\n        break\n    else:",
+        "peekOfCode": "a = int(input(\"Enter a (must be equal to 1 modulo 4): \"))\nc = int(input(\"Enter c (must be an odd number): \"))\nt0 = int(input(\"Enter T(0): \"))\n# Your list1\nlist1 = [5,  14, 12, 12, 14, 6,  8, 15, 18, 10, 1,  10, 2,  27, 12, 1,  11, 18, 27, 13, 9,  2,  27, 11, 8, 15, 18, 18, 27, 12, 13, 6,  10, 1,  7,  6, 24, 28, 17, 31, 1,  2,  2, 1,  18, 17, 18, 3,  14, 12, 18, 23, 10]  # Replace this with your list1\n# Generate the sequence\nsequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "numeric_len",
+        "label": "c",
         "kind": 5,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "numeric_len = len(numeric_text)\ncols = numeric_len\nmatrix = []\nwhile True:\n    row_input = input(\"Введите числа через пробел (или нажмите Enter для завершения): \")\n    if not row_input:\n        break\n    else:\n        row = list(map(int, row_input.split()))\n        matrix.append(row)",
+        "peekOfCode": "c = int(input(\"Enter c (must be an odd number): \"))\nt0 = int(input(\"Enter T(0): \"))\n# Your list1\nlist1 = [5,  14, 12, 12, 14, 6,  8, 15, 18, 10, 1,  10, 2,  27, 12, 1,  11, 18, 27, 13, 9,  2,  27, 11, 8, 15, 18, 18, 27, 12, 13, 6,  10, 1,  7,  6, 24, 28, 17, 31, 1,  2,  2, 1,  18, 17, 18, 3,  14, 12, 18, 23, 10]  # Replace this with your list1\n# Generate the sequence\nsequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "cols",
+        "label": "t0",
         "kind": 5,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "cols = numeric_len\nmatrix = []\nwhile True:\n    row_input = input(\"Введите числа через пробел (или нажмите Enter для завершения): \")\n    if not row_input:\n        break\n    else:\n        row = list(map(int, row_input.split()))\n        matrix.append(row)\nprint(numeric_text)",
+        "peekOfCode": "t0 = int(input(\"Enter T(0): \"))\n# Your list1\nlist1 = [5,  14, 12, 12, 14, 6,  8, 15, 18, 10, 1,  10, 2,  27, 12, 1,  11, 18, 27, 13, 9,  2,  27, 11, 8, 15, 18, 18, 27, 12, 13, 6,  10, 1,  7,  6, 24, 28, 17, 31, 1,  2,  2, 1,  18, 17, 18, 3,  14, 12, 18, 23, 10]  # Replace this with your list1\n# Generate the sequence\nsequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "matrix",
+        "label": "list1",
         "kind": 5,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "matrix = []\nwhile True:\n    row_input = input(\"Введите числа через пробел (или нажмите Enter для завершения): \")\n    if not row_input:\n        break\n    else:\n        row = list(map(int, row_input.split()))\n        matrix.append(row)\nprint(numeric_text)\nprint(keyword)",
+        "peekOfCode": "list1 = [5,  14, 12, 12, 14, 6,  8, 15, 18, 10, 1,  10, 2,  27, 12, 1,  11, 18, 27, 13, 9,  2,  27, 11, 8, 15, 18, 18, 27, 12, 13, 6,  10, 1,  7,  6, 24, 28, 17, 31, 1,  2,  2, 1,  18, 17, 18, 3,  14, 12, 18, 23, 10]  # Replace this with your list1\n# Generate the sequence\nsequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)\nprint(\"Processed list:\", processed_list)\nprint(\"Processed text:\", processed_text)",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "sequence",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "sequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)\nprint(\"Processed list:\", processed_list)\nprint(\"Processed text:\", processed_text)",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "processed_list",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "processed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)\nprint(\"Processed list:\", processed_list)\nprint(\"Processed text:\", processed_text)",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "processed_text",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "processed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)\nprint(\"Processed list:\", processed_list)\nprint(\"Processed text:\", processed_text)",
         "detail": "test",
         "documentation": {}
     }

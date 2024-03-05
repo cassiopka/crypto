@@ -19,8 +19,10 @@ def linear_congruential_generator(a, c, t0, modulo=32):
 
 def process_list(list1, sequence):
     result = []
-    for i in range(len(sequence)):
-        result.append((list1[i] + sequence[i]) % 32)
+    i = 0
+    while i < len(list1):
+        result.append((list1[i] + sequence[i % len(sequence)]) % 32)
+        i += 1
     return result
 
 def numeric_to_text(numeric_values):
@@ -32,30 +34,10 @@ def numeric_to_text(numeric_values):
             text += alphabet[value - 1]
     return text
 
-# User input
-
-# Your list1
-list1 = [5,  14, 12, 12, 14, 6,  8, 15, 18, 10, 1,  10, 2,  27, 12, 1,  11, 18, 27, 13, 9,  2,  27, 11, 8, 15, 18, 18, 27, 12, 13, 6,  10, 1,  7,  6, 24, 28, 17, 31, 1,  2,  2, 1,  18, 17, 18, 3,  14, 12, 18, 23, 10]  # Replace this with your list1
-
-# Generate the sequence
-sequence = linear_congruential_generator(a, c, t0)
-
-# Process the list
-processed_list = process_list(list1, sequence)
-
-# Convert processed_list to text
-processed_text = numeric_to_text(processed_list)
-
-print("First 100 numbers in the sequence (without T(0)):", sequence)
-print("Processed list:", processed_list)
-print("Processed text:", processed_text)
 
 
-
-
-
-
-
-
-
-
+def decrypt_text(numeric_values, sequence):
+    result = []
+    for i in range(len(sequence)):
+        result.append((numeric_values[i] - sequence[i]) % 32)
+    return result
