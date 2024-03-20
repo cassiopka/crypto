@@ -97,6 +97,22 @@
         "documentation": {}
     },
     {
+        "label": "*",
+        "importPath": "ciphers.shenon",
+        "description": "ciphers.shenon",
+        "isExtraImport": true,
+        "detail": "ciphers.shenon",
+        "documentation": {}
+    },
+    {
+        "label": "format_input",
+        "importPath": "utils.input_formatter",
+        "description": "utils.input_formatter",
+        "isExtraImport": true,
+        "detail": "utils.input_formatter",
+        "documentation": {}
+    },
+    {
         "label": "format_input",
         "importPath": "utils.input_formatter",
         "description": "utils.input_formatter",
@@ -126,6 +142,15 @@
         "description": "utils.text_to_numeric",
         "isExtraImport": true,
         "detail": "utils.text_to_numeric",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
         "documentation": {}
     },
     {
@@ -219,6 +244,42 @@
         "documentation": {}
     },
     {
+        "label": "linear_congruential_generator",
+        "kind": 2,
+        "importPath": "ciphers.shenon",
+        "description": "ciphers.shenon",
+        "peekOfCode": "def linear_congruential_generator(a, c, t0, modulo=32):\n    if a % 4 != 1:\n        raise ValueError(\"a must be equal to 1 modulo 4\")\n    if c % 2 == 0:\n        raise ValueError(\"c must be an odd number\")\n    sequence = []\n    i = 0\n    t_current = t0\n    while i < 100:\n        i += 1",
+        "detail": "ciphers.shenon",
+        "documentation": {}
+    },
+    {
+        "label": "process_list",
+        "kind": 2,
+        "importPath": "ciphers.shenon",
+        "description": "ciphers.shenon",
+        "peekOfCode": "def process_list(list1, sequence):\n    result = []\n    i = 0\n    while i < len(list1):\n        result.append((list1[i] + sequence[i % len(sequence)]) % 32)\n        i += 1\n    return result\ndef numeric_to_text(numeric_values):\n    \"\"\"Функция для преобразования числового эквивалента в текст.\"\"\"\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'",
+        "detail": "ciphers.shenon",
+        "documentation": {}
+    },
+    {
+        "label": "numeric_to_text",
+        "kind": 2,
+        "importPath": "ciphers.shenon",
+        "description": "ciphers.shenon",
+        "peekOfCode": "def numeric_to_text(numeric_values):\n    \"\"\"Функция для преобразования числового эквивалента в текст.\"\"\"\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'\n    text = ''\n    for value in numeric_values:\n        if 1 <= value <= len(alphabet):\n            text += alphabet[value - 1]\n    return text\ndef decrypt_text(numeric_values, sequence):\n    result = []",
+        "detail": "ciphers.shenon",
+        "documentation": {}
+    },
+    {
+        "label": "decrypt_text",
+        "kind": 2,
+        "importPath": "ciphers.shenon",
+        "description": "ciphers.shenon",
+        "peekOfCode": "def decrypt_text(numeric_values, sequence):\n    result = []\n    for i in range(len(sequence)):\n        result.append((numeric_values[i] - sequence[i]) % 32)\n    return result",
+        "detail": "ciphers.shenon",
+        "documentation": {}
+    },
+    {
         "label": "trithemius_cipher",
         "kind": 2,
         "importPath": "ciphers.trithemius_cipher",
@@ -252,6 +313,15 @@
         "description": "utils.block_formatter",
         "peekOfCode": "def format_blocks(text: str) -> str:\n    \"\"\"Разделение строки на блоки по 5 символов.\"\"\"\n    return ' '.join([text[i:i+5] for i in range(0, len(text), 5)])",
         "detail": "utils.block_formatter",
+        "documentation": {}
+    },
+    {
+        "label": "format_output",
+        "kind": 2,
+        "importPath": "utils.format_output",
+        "description": "utils.format_output",
+        "peekOfCode": "def format_output(text: str) -> str:\n    \"\"\"Форматирование выходной строки.\"\"\"\n    formatted_text = text.replace('тире', '-').replace('зпт', ',').replace('тчк', '.')\n    return formatted_text",
+        "detail": "utils.format_output",
         "documentation": {}
     },
     {
@@ -300,92 +370,74 @@
         "documentation": {}
     },
     {
-        "label": "linear_congruential_generator",
+        "label": "extended_gcd",
         "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "def linear_congruential_generator(a, c, t0, modulo=32):\n    if a % 4 != 1:\n        raise ValueError(\"a must be equal to 1 modulo 4\")\n    if c % 2 == 0:\n        raise ValueError(\"c must be an odd number\")\n    sequence = []\n    i = 0\n    t_current = t0\n    while i < 100:\n        i += 1",
+        "peekOfCode": "def extended_gcd(a, b):\n    x, y, u, v = 0, 1, 1, 0\n    while a != 0:\n        q = b // a\n        b, a, u, v = a, b % a, v, u - q * v\n        x, y = y, x - q * y\n    return b, x, y\ndef modular_inverse(e, fi):\n    gcd, x, y = extended_gcd(e, fi)\n    if gcd != 1:",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "process_list",
+        "label": "modular_inverse",
         "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "def process_list(list1, sequence):\n    result = []\n    for i in range(len(sequence)):\n        result.append((list1[i] + sequence[i]) % 32)\n    return result\ndef numeric_to_text(numeric_values):\n    \"\"\"Функция для преобразования числового эквивалента в текст.\"\"\"\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'\n    text = ''\n    for value in numeric_values:",
+        "peekOfCode": "def modular_inverse(e, fi):\n    gcd, x, y = extended_gcd(e, fi)\n    if gcd != 1:\n        raise ValueError(\"e и fi не являются взаимно простыми\")\n    return x % fi\ndef gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a\ndef find_position(letter, alphabet):",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "numeric_to_text",
+        "label": "gcd",
         "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "def numeric_to_text(numeric_values):\n    \"\"\"Функция для преобразования числового эквивалента в текст.\"\"\"\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'\n    text = ''\n    for value in numeric_values:\n        if 1 <= value <= len(alphabet):\n            text += alphabet[value - 1]\n    return text\n# User input\na = int(input(\"Enter a (must be equal to 1 modulo 4): \"))",
+        "peekOfCode": "def gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a\ndef find_position(letter, alphabet):\n    return alphabet.index(letter)\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n == 2:",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "a",
-        "kind": 5,
+        "label": "find_position",
+        "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "a = int(input(\"Enter a (must be equal to 1 modulo 4): \"))\nc = int(input(\"Enter c (must be an odd number): \"))\nt0 = int(input(\"Enter T(0): \"))\n# Your list1\nlist1 = [5,  14, 12, 12, 14, 6,  8, 15, 18, 10, 1,  10, 2,  27, 12, 1,  11, 18, 27, 13, 9,  2,  27, 11, 8, 15, 18, 18, 27, 12, 13, 6,  10, 1,  7,  6, 24, 28, 17, 31, 1,  2,  2, 1,  18, 17, 18, 3,  14, 12, 18, 23, 10]  # Replace this with your list1\n# Generate the sequence\nsequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text",
+        "peekOfCode": "def find_position(letter, alphabet):\n    return alphabet.index(letter)\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    for i in range(3, int(math.sqrt(n)) + 1, 2):",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "c",
-        "kind": 5,
+        "label": "is_prime",
+        "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "c = int(input(\"Enter c (must be an odd number): \"))\nt0 = int(input(\"Enter T(0): \"))\n# Your list1\nlist1 = [5,  14, 12, 12, 14, 6,  8, 15, 18, 10, 1,  10, 2,  27, 12, 1,  11, 18, 27, 13, 9,  2,  27, 11, 8, 15, 18, 18, 27, 12, 13, 6,  10, 1,  7,  6, 24, 28, 17, 31, 1,  2,  2, 1,  18, 17, 18, 3,  14, 12, 18, 23, 10]  # Replace this with your list1\n# Generate the sequence\nsequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)",
+        "peekOfCode": "def is_prime(n):\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    for i in range(3, int(math.sqrt(n)) + 1, 2):\n        if n % i == 0:\n            return False",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "t0",
-        "kind": 5,
+        "label": "generate_keys",
+        "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "t0 = int(input(\"Enter T(0): \"))\n# Your list1\nlist1 = [5,  14, 12, 12, 14, 6,  8, 15, 18, 10, 1,  10, 2,  27, 12, 1,  11, 18, 27, 13, 9,  2,  27, 11, 8, 15, 18, 18, 27, 12, 13, 6,  10, 1,  7,  6, 24, 28, 17, 31, 1,  2,  2, 1,  18, 17, 18, 3,  14, 12, 18, 23, 10]  # Replace this with your list1\n# Generate the sequence\nsequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)",
+        "peekOfCode": "def generate_keys():\n    while True:\n        p = int(input(\"Введите простое число p (> 2): \"))\n        if is_prime(p) and p > 2:\n            break\n        else:\n            print(\"Число p должно быть простым и больше 2. Попробуйте еще раз.\")\n    while True:\n        q = int(input(\"Введите простое число q (> 2): \"))\n        if is_prime(q) and q > 2 and q != p:",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "list1",
-        "kind": 5,
+        "label": "encrypt",
+        "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "list1 = [5,  14, 12, 12, 14, 6,  8, 15, 18, 10, 1,  10, 2,  27, 12, 1,  11, 18, 27, 13, 9,  2,  27, 11, 8, 15, 18, 18, 27, 12, 13, 6,  10, 1,  7,  6, 24, 28, 17, 31, 1,  2,  2, 1,  18, 17, 18, 3,  14, 12, 18, 23, 10]  # Replace this with your list1\n# Generate the sequence\nsequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)\nprint(\"Processed list:\", processed_list)\nprint(\"Processed text:\", processed_text)",
+        "peekOfCode": "def encrypt(text, key):\n    e, n = key\n    encrypted_text = []\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'\n    for char in text:\n        if char not in alphabet:\n            print(\"Недопустимый символ в тексте. Допускаются только строчные буквы русского алфавита.\")\n            return None\n        position = find_position(char, alphabet) + 1\n        encrypted_position = pow(position, e, n)",
         "detail": "test",
         "documentation": {}
     },
     {
-        "label": "sequence",
-        "kind": 5,
+        "label": "decrypt",
+        "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "sequence = linear_congruential_generator(a, c, t0)\n# Process the list\nprocessed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)\nprint(\"Processed list:\", processed_list)\nprint(\"Processed text:\", processed_text)",
-        "detail": "test",
-        "documentation": {}
-    },
-    {
-        "label": "processed_list",
-        "kind": 5,
-        "importPath": "test",
-        "description": "test",
-        "peekOfCode": "processed_list = process_list(list1, sequence)\n# Convert processed_list to text\nprocessed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)\nprint(\"Processed list:\", processed_list)\nprint(\"Processed text:\", processed_text)",
-        "detail": "test",
-        "documentation": {}
-    },
-    {
-        "label": "processed_text",
-        "kind": 5,
-        "importPath": "test",
-        "description": "test",
-        "peekOfCode": "processed_text = numeric_to_text(processed_list)\nprint(\"First 100 numbers in the sequence (without T(0)):\", sequence)\nprint(\"Processed list:\", processed_list)\nprint(\"Processed text:\", processed_text)",
+        "peekOfCode": "def decrypt(encrypted_text, key):\n    d, n = key\n    decrypted_text = []\n    alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'\n    for position in encrypted_text:\n        decrypted_position = pow(position, d, n)\n        decrypted_char = alphabet[decrypted_position - 1]\n        decrypted_text.append(decrypted_char)\n    return ''.join(decrypted_text)\nif __name__ == \"__main__\":",
         "detail": "test",
         "documentation": {}
     }
